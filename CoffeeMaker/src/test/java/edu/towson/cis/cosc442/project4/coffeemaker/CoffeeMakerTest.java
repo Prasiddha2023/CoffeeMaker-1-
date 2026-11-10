@@ -2,6 +2,8 @@ package edu.towson.cis.cosc442.project4.coffeemaker;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -185,6 +187,17 @@ class CoffeeMakerTest {
     }
 
     @Test
+    void getRecipesContainsAdded() {
+        // Arrange
+        Recipe r = named("Latte");
+        cm.addRecipe(r);
+        // Act
+        Recipe[] recipes = cm.getRecipes();
+        // Assert
+        assertTrue(Arrays.asList(recipes).contains(r));
+    }
+
+    @Test
     void addInventoryPositive() {
         // Arrange
         int c = cm.checkInventory().getCoffee();
@@ -241,22 +254,22 @@ class CoffeeMakerTest {
         assertEquals(expectedReturn, result);
     }
 
-@Test
-void makeCoffeeUsesIngredients() {
-    // Arrange
-    Recipe r = makeRecipe("Latte", 5, 2, 3, 1, 4);
-    int c = cm.checkInventory().getCoffee();
-    int m = cm.checkInventory().getMilk();
-    int s = cm.checkInventory().getSugar();
-    int ch = cm.checkInventory().getChocolate();
-    // Act
-    cm.makeCoffee(r, 5);
-    // Assert
-    assertEquals(c - 2, cm.checkInventory().getCoffee());
-    assertEquals(m - 3, cm.checkInventory().getMilk());
-    assertEquals(s - 1, cm.checkInventory().getSugar());
-    assertEquals(ch - 4, cm.checkInventory().getChocolate());
-}
+    @Test
+    void makeCoffeeUsesIngredients() {
+        // Arrange
+        Recipe r = makeRecipe("Latte", 5, 2, 3, 1, 4);
+        int c = cm.checkInventory().getCoffee();
+        int m = cm.checkInventory().getMilk();
+        int s = cm.checkInventory().getSugar();
+        int ch = cm.checkInventory().getChocolate();
+        // Act
+        cm.makeCoffee(r, 5);
+        // Assert
+        assertEquals(c - 2, cm.checkInventory().getCoffee());
+        assertEquals(m - 3, cm.checkInventory().getMilk());
+        assertEquals(s - 1, cm.checkInventory().getSugar());
+        assertEquals(ch - 4, cm.checkInventory().getChocolate());
+    }
 
     @Test
     void makeCoffeeUnderpaidInventory() {
